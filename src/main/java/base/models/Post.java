@@ -36,6 +36,7 @@ public class Post implements Serializable {
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     UUID id;
+
     String title;
     String content;
 
@@ -67,11 +68,10 @@ public class Post implements Serializable {
     @Override
     public String toString() {
         return "Post {" +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                ", content='" + content + '\'' +
-                // ", status=" + status +
-                ", createdAt=" + createdAt +
-                '}';
+            "id=" + id +
+            ", title='" + title + '\'' +
+            ", content='" + content + '\'' +
+            ", createdAt=" + createdAt +
+        '}';
     }
 }

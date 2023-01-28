@@ -7,12 +7,11 @@ import java.util.UUID;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 
+import base.application.PostAPL;
 import base.dtos.PostInputDto;
 import base.dtos.PostOutputDto;
 import base.exceptions.PostNotFoundException;
 import base.models.Post;
-// import base.repositories.CommentRepository;
-import base.repositories.PostRepository;
 
 import io.micronaut.http.annotation.Put;
 
@@ -32,8 +31,7 @@ import jakarta.inject.Inject;
 @RequiredArgsConstructor(onConstructor_ = {@Inject})
 @Validated
 public class PostController {
-    private final PostRepository posts;
-    // private final CommentRepository comments;
+    private final PostAPL post_app;
 
     @io.micronaut.http.annotation.Post(uri = "/", consumes = MediaType.APPLICATION_JSON)
     @Transactional
@@ -42,13 +40,13 @@ public class PostController {
             .title(dto.title())
             .content(dto.content())
             .build();
-        var saved = this.posts.save(data);
+        var saved = this.post_app.save(data);
         return HttpResponse.created(URI.create("/posts/" + saved.getId()));
     }
 
     @Get(uri = "/", produces = MediaType.APPLICATION_JSON)
     public HttpResponse<List<PostOutputDto>> getAll() {
-        var body = posts.findAll()
+        var body = post_app.findAll()
             .stream()
             .map(p -> new PostOutputDto(p.getId(), p.getTitle(), p.getContent(), p.getCreatedAt()))
             .toList();
@@ -58,7 +56,7 @@ public class PostController {
     @Get(uri = "/{id}", produces = MediaType.APPLICATION_JSON)
     public HttpResponse<PostOutputDto> getById(@PathVariable UUID id) {
 
-        return posts.findById(id)
+        return post_app.findById(id)
             .map(p -> HttpResponse.ok(new PostOutputDto(p.getId(), p.getTitle(), p.getContent(), p.getCreatedAt())))
             // .orElseGet(HttpResponse::notFound);
             .orElseThrow(() -> new PostNotFoundException(id));
@@ -66,11 +64,11 @@ public class PostController {
 
     @Put(uri = "/{id}", consumes = MediaType.APPLICATION_JSON)
     public HttpResponse<?> updateById(@PathVariable UUID id, @Body @Valid PostInputDto dto) {
-        return posts.findById(id)
+        return post_app.findById(id)
             .map(p -> {
                 p.setTitle(dto.title());
                 p.setContent(dto.content());
-                this.posts.update(p);
+                this.post_app.update(p);
                 return HttpResponse.ok(dto);
             })
             .orElseThrow(() -> new PostNotFoundException(id));
@@ -79,9 +77,9 @@ public class PostController {
     @Delete(uri = "/{id}", produces = MediaType.APPLICATION_JSON)
     @Transactional
     public HttpResponse<?> deleteById(@PathVariable UUID id) {
-        return posts.findById(id)
+        return post_app.findById(id)
             .map(p -> {
-                this.posts.delete(p);
+                this.post_app.delete(p);
                 return HttpResponse.noContent();
             })
             .orElseThrow(() -> new PostNotFoundException(id));
