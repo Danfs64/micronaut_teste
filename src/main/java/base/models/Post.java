@@ -25,10 +25,10 @@ import java.util.UUID;
 
 @Getter
 @Setter
+@Entity
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
-@Entity
 @Table(name = "posts")
 public class Post implements Serializable {
 

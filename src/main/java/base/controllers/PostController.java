@@ -1,31 +1,27 @@
 package base.controllers;
 
+import base.models.Post;
+import base.dtos.PostInputDto;
+import base.dtos.PostOutputDto;
+import base.application.PostAPL;
+import base.exceptions.PostNotFoundException;
+
 import java.net.URI;
 import java.util.List;
 import java.util.UUID;
-
-import javax.transaction.Transactional;
+import jakarta.inject.Inject;
 import javax.validation.Valid;
-
-import base.application.PostAPL;
-import base.dtos.PostInputDto;
-import base.dtos.PostOutputDto;
-import base.exceptions.PostNotFoundException;
-import base.models.Post;
-
-import io.micronaut.http.annotation.Put;
-
+import javax.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 import io.micronaut.http.HttpResponse;
 import io.micronaut.http.MediaType;
 import io.micronaut.http.annotation.Body;
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Delete;
 import io.micronaut.http.annotation.Get;
+import io.micronaut.http.annotation.Put;
 import io.micronaut.http.annotation.PathVariable;
 import io.micronaut.validation.Validated;
-
-import lombok.RequiredArgsConstructor;
-import jakarta.inject.Inject;
 
 @Controller("/posts")
 @RequiredArgsConstructor(onConstructor_ = {@Inject})

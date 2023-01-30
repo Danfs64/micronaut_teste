@@ -1,10 +1,9 @@
 package base.dtos;
 
-import java.time.LocalDateTime;
 import java.util.UUID;
-
-import javax.validation.constraints.NotBlank;
+import java.time.LocalDateTime;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.PastOrPresent;
 
 public record PostOutputDto(
