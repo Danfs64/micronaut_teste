@@ -6,10 +6,10 @@ import java.util.UUID;
 
 import base.models.Post;
 import base.repositories.PostRepository;
-import jakarta.inject.Singleton;
+import io.micronaut.context.annotation.Prototype;
 import lombok.RequiredArgsConstructor;
 
-@Singleton
+@Prototype
 @RequiredArgsConstructor
 public class PostAPL {
     private final PostRepository repo;
