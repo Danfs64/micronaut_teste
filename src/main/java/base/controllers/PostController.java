@@ -44,7 +44,13 @@ public class PostController {
     public HttpResponse<List<PostOutputDto>> getAll() {
         var body = post_app.findAll()
             .stream()
-            .map(p -> new PostOutputDto(p.getId(), p.getTitle(), p.getContent(), p.getCreatedAt()))
+            .map(p -> new PostOutputDto(
+                p.getId(),
+                p.getTitle(),
+                p.getContent(),
+                // p.getComments().stream().map(elem -> elem.getId()).toList(),
+                p.getCreatedAt()
+            ))
             .toList();
         return HttpResponse.ok(body);
     }
@@ -53,8 +59,13 @@ public class PostController {
     public HttpResponse<PostOutputDto> getById(@PathVariable UUID id) {
 
         return post_app.findById(id)
-            .map(p -> HttpResponse.ok(new PostOutputDto(p.getId(), p.getTitle(), p.getContent(), p.getCreatedAt())))
-            // .orElseGet(HttpResponse::notFound);
+            .map(p -> HttpResponse.ok(new PostOutputDto(
+                p.getId(),
+                p.getTitle(),
+                p.getContent(),
+                // p.getComments().stream().map(elem -> elem.getId()).toList(),
+                p.getCreatedAt())
+            ))
             .orElseThrow(() -> new PostNotFoundException(id));
     }
 
@@ -79,6 +90,5 @@ public class PostController {
                 return HttpResponse.noContent();
             })
             .orElseThrow(() -> new PostNotFoundException(id));
-            //.orElseGet(HttpResponse::notFound);
     }
 }

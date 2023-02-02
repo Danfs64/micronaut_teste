@@ -11,7 +11,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import javax.persistence.OrderColumn;
+// import javax.persistence.OrderColumn;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
@@ -48,7 +48,7 @@ public class Post implements Serializable {
 
     @OneToMany(cascade = {CascadeType.ALL}, orphanRemoval = true, mappedBy = "post")
     @Builder.Default
-    @OrderColumn(name = "comment_idx")
+    // @OrderColumn(name = "comment_idx")
     List<Comment> comments = new ArrayList<>();
 
     @Override
