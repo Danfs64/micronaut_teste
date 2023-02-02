@@ -35,10 +35,12 @@ public class CommentController {
     @io.micronaut.http.annotation.Post(uri = "/", consumes = MediaType.APPLICATION_JSON)
     @Transactional
     public HttpResponse<Void> create(@Body @Valid CommentInputDto dto) {
+        var post = post_app.findById(dto.post_id()).orElseThrow(() -> new PostNotFoundException(dto.post_id()));
         var data = Comment.builder()
-            .post(post_app.findById(dto.post_id()).orElseThrow(() -> new PostNotFoundException(dto.post_id())))
+            .post(post)
             .content(dto.content())
             .build();
+        // post.getComments().add(data);
         var saved = this.comment_app.save(data);
         return HttpResponse.created(URI.create("/comments/" + saved.getId()));
     }
