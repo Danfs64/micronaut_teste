@@ -18,8 +18,10 @@ import org.hibernate.annotations.GenericGenerator;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
+// import java.util.ArrayList;
+// import java.util.List;
+import java.util.Set;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -49,7 +51,7 @@ public class Post implements Serializable {
     @OneToMany(cascade = {CascadeType.ALL}, orphanRemoval = true, mappedBy = "post")
     @Builder.Default
     // @OrderColumn(name = "comment_idx")
-    List<Comment> comments = new ArrayList<>();
+    Set<Comment> comments = new HashSet<>();
 
     @Override
     public boolean equals(Object o) {

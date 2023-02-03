@@ -41,6 +41,7 @@ public class PostController {
     }
 
     @Get(uri = "/", produces = MediaType.APPLICATION_JSON)
+    @Transactional
     public HttpResponse<List<PostOutputDto>> getAll() {
         var body = post_app.findAll()
             .stream()
@@ -48,7 +49,7 @@ public class PostController {
                 p.getId(),
                 p.getTitle(),
                 p.getContent(),
-                // p.getComments().stream().map(elem -> elem.getId()).toList(),
+                p.getComments().stream().map(elem -> elem.getId()).toList(),
                 p.getCreatedAt()
             ))
             .toList();
@@ -56,6 +57,7 @@ public class PostController {
     }
 
     @Get(uri = "/{id}", produces = MediaType.APPLICATION_JSON)
+    @Transactional
     public HttpResponse<PostOutputDto> getById(@PathVariable UUID id) {
 
         return post_app.findById(id)
@@ -63,7 +65,7 @@ public class PostController {
                 p.getId(),
                 p.getTitle(),
                 p.getContent(),
-                // p.getComments().stream().map(elem -> elem.getId()).toList(),
+                p.getComments().stream().map(elem -> elem.getId()).toList(),
                 p.getCreatedAt())
             ))
             .orElseThrow(() -> new PostNotFoundException(id));
