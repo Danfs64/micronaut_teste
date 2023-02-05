@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-import base.models.Post;
+// import base.models.Post;
 import base.models.Comment;
 import base.repositories.CommentRepository;
 import io.micronaut.context.annotation.Prototype;
@@ -35,7 +35,7 @@ public class CommentAPL {
         this.repo.delete(p);
     }
 
-    public List<Comment> findByPost(Post p) {
-        return this.repo.findByPost(p);
-    }
+    // public List<Comment> findByPost(Post p) {
+    //     return this.repo.findByPost(p);
+    // }
 }
